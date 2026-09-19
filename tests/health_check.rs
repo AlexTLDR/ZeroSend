@@ -8,7 +8,7 @@ async fn healt_check_works() {
 
     // Act
     let response = client
-        .get(&format!("{}/health_check", &address))
+        .get(format!("{}/health_check", address))
         .send()
         .await
         .expect("Failed to execute request.");
@@ -19,12 +19,11 @@ async fn healt_check_works() {
 }
 
 fn spawn_app() -> String {
-    let listener = TcpListener::bind("127.0.0.1:0")
-        .expect("Failed to bind random port");
+    let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
     // Retrive the port assigned to us from the OS
     let port = listener.local_addr().unwrap().port();
     let server = zero_send::run(listener).expect("Failed to bind address");
-    let _ = tokio::spawn(server);
+    let _handle = tokio::spawn(server);
     // Return the application address to the caller!
     format!("http://127.0.0.1:{}", port)
 }
@@ -38,7 +37,7 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
     // Act
     let body = "name=alex%20tldr&email=alex%40alextldr.com";
     let response = client
-        .post(&format!("{}/subscriptions", &app_address))
+        .post(format!("{}/subscriptions", app_address))
         .header("Content-Type", "application/x-www-form-urlencoded")
         .body(body)
         .send()
@@ -57,13 +56,13 @@ async fn subscribe_returns_a_400_when_data_is_missing() {
     let test_cases = vec![
         ("name=alex%20tldr", "missing the email"),
         ("email=alex@alextldr.com", "missing the name"),
-        ("", "missing both name and email")
+        ("", "missing both name and email"),
     ];
 
     for (invalid_body, error_message) in test_cases {
         // Act
         let response = client
-            .post(&format!("{}/subscriptions", &app_address))
+            .post(format!("{}/subscriptions", app_address))
             .header("Content-Type", "application/x-www-form-urlencoded")
             .body(invalid_body)
             .send()
