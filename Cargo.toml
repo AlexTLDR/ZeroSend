@@ -1,5 +1,5 @@
 [package]
-name = "ZeroSend"
+name = "zero-send"
 version = "0.1.0"
 edition = "2024"
 

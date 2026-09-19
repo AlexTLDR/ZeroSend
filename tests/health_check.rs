@@ -19,6 +19,6 @@ async fn healt_check_works() {
 }
 
 fn spawn_app() {
-    let server = ZeroSend::run().expect("Failed to bind address");
+    let server = zero_send::run("127.0.0.1").expect("Failed to bind address");
     let _ = tokio::spawn(server);
 }

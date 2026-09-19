@@ -3,15 +3,6 @@
 version = 4
 
 [[package]]
-name = "ZeroSend"
-version = "0.1.0"
-dependencies = [
- "actix-web",
- "reqwest",
- "tokio",
-]
-
-[[package]]
 name = "actix-codec"
 version = "0.5.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2295,6 +2286,15 @@ dependencies = [
  "quote",
  "syn 3.0.6",
  "synstructure",
+]
+
+[[package]]
+name = "zero-send"
+version = "0.1.0"
+dependencies = [
+ "actix-web",
+ "reqwest",
+ "tokio",
 ]
 
 [[package]]
